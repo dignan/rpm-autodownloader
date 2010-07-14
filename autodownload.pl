@@ -14,9 +14,18 @@ my %supported_proto_method = (
                 http => \&get_http
             );
 
-my ($source, $name, $version, $proto);
+my ($source, $name, $version, $proto, $numargs, $file);
+our @ARGV;
 
-if (open(SPEC, "git/F-13/git.spec") == 0) {
+if ($#ARGV < 0) {
+    die("Not enough arguments\n");
+} elsif ($ARGV[0] !~ m/.*\.spec/i) {
+    die("Not a valid file.  Must pass a .spec file\n");
+} else {
+    $file = $ARGV[0];
+}
+
+if (open(SPEC, $file) == 0) {
 	print "Could not open file\n";
 }
 
